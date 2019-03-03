@@ -1,4 +1,4 @@
-# FISHER'S LINEAR DISCRIMINANT
+# Fisher's Linear Discriminant
 
 Code to perform fisher's linear dicscriminant upon given dataset
 
