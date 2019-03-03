@@ -11,6 +11,7 @@ Code to perform fisher's linear dicscriminant upon given dataset
 * Run `python index.py` from root directory
 
 ## Dataset Model
+* Dataset is inside `data.txt` file in root directory
 * Each feature is followed by `,`
 * Class is present at end of each data
 * Each data instance is followed by `\n`
