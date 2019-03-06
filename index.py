@@ -44,11 +44,6 @@ class Index:
         dataList = re.split("\n", dataString)
         # Removing final empty entry from dataList
         dataList.pop()
-        # Calling getFeatures
-        self.getFeatures(dataList)
-
-    # Initializing function to get features from data
-    def getFeatures(self, dataList):
         # Iterating through data list
         for data in dataList:
             # Getting features from data
