@@ -10,6 +10,7 @@ import matplotlib.pyplot as pyplot
 import matplotlib.mlab as mlab
 import json
 from helpers.readFile import ReadFile
+from helpers.readCsvFile import ReadCsvFile
 from helpers.getIntersection import GetIntersection
 from helpers.fitCurve import FitCurve
 
@@ -38,53 +39,40 @@ class Index:
     # Initializing function to get data
     def getData(self):
         # Getting data from file
-        file = ReadFile("data.txt")
-        dataString = file.read()
-        # Splitting data
-        dataList = re.split("\n", dataString)
-        # Removing final empty entry from dataList
-        dataList.pop()
-        # Iterating through data list
-        for data in dataList:
-            # Getting features from data
-            features = re.split(",", data)
-            # Checking if features belong to class 1
-            if features[4]=="Iris-setosa":
-                # Features belong to class 1, update class1 object with features
-                # Iterating through features
-                for i in range(self.noOfFeatures):
-                    # Setting value in data
-                    self.data[0][i][int(self.counter[0])] = features[i]
-                # Updating counter
-                self.counter[0]=self.counter[0]+1
-            else:
-                # Features belong to class 2, update class1 object with features
-                # Iterating through features
-                for i in range(self.noOfFeatures):
-                    # Setting value in data
-                    self.data[1][i][int(self.counter[1])] = features[i]
-                # Updating counter
-                self.counter[1]=self.counter[1]+1
+        file = ReadCsvFile("dataset_1.csv")
+        reader = file.read()
+        # Iterating over data
+        for row in reader:
+            # Iterating over features
+            for i in range(self.noOfFeatures):
+                # Storing features in data object
+                self.data[int(row[3])][i][int(self.counter[int(row[3])])] = row[i+1]
+            # Updating counter
+            self.counter[int(row[3])]=self.counter[int(row[3])]+1
+
         self.calculate()
 
     # Initializing function to get mean
     def calculate(self):
-        # Getting mean of features in class 1
-        self.mean1 = numpy.mean(self.data[0], axis=1)
-        # Getting mean of features in class 2
-        self.mean2 = numpy.mean(self.data[1], axis=1)
-        # Calculating Sw matrix
-        difference1 = numpy.transpose(numpy.subtract(numpy.transpose(self.data[0]), numpy.transpose(self.mean1)))
-        difference2 = numpy.transpose(numpy.subtract(numpy.transpose(self.data[1]), numpy.transpose(self.mean2)))
-        transpose1 = numpy.transpose(difference1)
-        transpose2 = numpy.transpose(difference2)
-        var1 = difference1.dot(transpose1)
-        var2 = difference2.dot(transpose2)
-        self.sw = var1+var2
+        mean = []
+        difference = []
+        transpose = []
+        var = []
+        for i in range(self.noOfClasses):
+            # Getting mean of features in i'th class
+            mean.append(numpy.mean(self.data[i], axis=1))
+            # Calculating Sw matrix
+            difference.append(numpy.transpose(numpy.subtract(numpy.transpose(self.data[i]), numpy.transpose(mean[i]))))
+            transpose.append(numpy.transpose(difference[i]))
+            var.append(difference[i].dot(transpose[i]))
+        # Calculating shared covariance matrix
+        sw = numpy.zeros(var[0].shape)
         # Getting difference of mean
-        self.difference = self.mean2-self.mean1
+        difference = mean[0]-mean[1]
+        for i in range(self.noOfClasses):
+            sw = sw+var[i]
         # Calculating discriminant vector
-        self.discriminant = numpy.linalg.inv(self.sw).dot(self.difference)
+        self.discriminant = numpy.linalg.inv(sw).dot(difference)
         # Calling function to reduce dimensions
         self.reduceDimension()
 
@@ -108,11 +96,11 @@ class Index:
         # Plotting class 1 points
         pyplot.plot(class2, y, "go", markerfacecolor='none')
         # Plotting gaussian curve for class 1
-        x = numpy.linspace(class1Parameters["mean"] - 3*class1Parameters["var"], class1Parameters["mean"] + 3*class1Parameters["var"], 100)
-        pyplot.plot(x, mlab.normpdf(x, class1Parameters["mean"], class1Parameters["var"]))
+        x = numpy.linspace(class1Parameters["mean"] - 3*class1Parameters["var"], class1Parameters["mean"] + 3*class1Parameters["var"], int(self.dataSize/self.noOfClasses))
+        pyplot.plot(sorted(class1), mlab.normpdf(x, class1Parameters["mean"], class1Parameters["var"]))
         # Plotting gaussian curve for class 2
-        x = numpy.linspace(class2Parameters["mean"] - 3*class2Parameters["var"], class2Parameters["mean"] + 3*class2Parameters["var"], 100)
-        pyplot.plot(x, mlab.normpdf(x, class2Parameters["mean"], class2Parameters["var"]))
+        x = numpy.linspace(class2Parameters["mean"] - 3*class2Parameters["var"], class2Parameters["mean"] + 3*class2Parameters["var"], int(self.dataSize/self.noOfClasses))
+        pyplot.plot(sorted(class2), mlab.normpdf(x, class2Parameters["mean"], class2Parameters["var"]))
         # Getting point of intersection of curves
         self.discriminantPoint = GetIntersection(class1Parameters, class2Parameters).getResult()
         # Displaying plot
