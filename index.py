@@ -22,7 +22,7 @@ class Index:
         file = ReadFile("config.json")
         config = json.loads(file.read())
         # Setting file name
-        self.fileName = config.fileName
+        self.fileName = config["fileName"]
         # Setting no of classes
         self.noOfClasses = config["noOfClasses"]
         # Setting number of data available
