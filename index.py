@@ -102,8 +102,8 @@ class Index:
             pyplot.plot(classfication[i], y, marker[i], markerfacecolor='none')
         # Plotting gaussian curve for each class
         for i in range(self.noOfClasses):
-            x = numpy.linspace(classParams[i]["mean"] - 3*math.sqrt(classParams[i]["var"]), classParams[i]["mean"] + 3*math.sqrt(classParams[i]["var"]), int(self.dataSize/self.noOfClasses))
-            pyplot.plot(x, mlab.normpdf(x, classParams[i]["mean"], math.sqrt(classParams[i]["var"])))
+            x = numpy.linspace(classParams[i]["mean"] - 3*classParams[i]["sd"], classParams[i]["mean"] + 3*classParams[i]["sd"], int(self.dataSize/self.noOfClasses))
+            pyplot.plot(x, mlab.normpdf(x, classParams[i]["mean"], classParams[i]["sd"]))
         # Getting point of intersection of curves
         self.discriminantPoint = GetIntersection(classParams[0], classParams[1]).getResult()
         # Displaying plot
