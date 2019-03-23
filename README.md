@@ -5,3 +5,4 @@ Each branch contains code for implementing a different machine learning algorith
 ## Algorithms
 
 * Linear discriminant
+* Perceptron
