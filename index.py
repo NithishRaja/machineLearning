@@ -72,7 +72,7 @@ class Index:
         return misclassifiedData
 
     # Initializing function to plot data
-    def plotPoints(self):
+    def plotPoints(self, plotName):
         # Plotting data points
         marker = ["ro", "go"]
         # Iterating over each class
@@ -84,16 +84,18 @@ class Index:
         x = numpy.linspace(-3, 3, 3)
         y = -(self.weightVector[0]*x+self.weightVector[2])/self.weightVector[1]
         pyplot.plot(x, y)
-        # Displaying plot
-        pyplot.show()
+        # Saving plot as an image file
+        pyplot.savefig(plotName)
+        # Closing plot
+        pyplot.close()
 
 # Creating object
 index = Index()
 index.getData()
-index.plotPoints()
-
+index.plotPoints("plot/initial_plot.png")
+epochCounter = 1
 misclassifiedData = 1
 while misclassifiedData!=0:
     misclassifiedData = index.classify()
-    print(misclassifiedData)
-index.plotPoints()
+    index.plotPoints("plot/epoch_"+str(epochCounter)+".png")
+    epochCounter = epochCounter+1
