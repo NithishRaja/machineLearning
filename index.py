@@ -6,9 +6,10 @@
 # Dependencies
 import re
 import numpy
+import math
+import json
 import matplotlib.pyplot as pyplot
 import matplotlib.mlab as mlab
-import json
 from helpers.readFile import ReadFile
 from helpers.readCsvFile import ReadCsvFile
 from helpers.getIntersection import GetIntersection
@@ -98,11 +99,11 @@ class Index:
         # Plotting class 1 points
         pyplot.plot(class2, y, "go", markerfacecolor='none')
         # Plotting gaussian curve for class 1
-        x = numpy.linspace(class1Parameters["mean"] - 3*class1Parameters["var"], class1Parameters["mean"] + 3*class1Parameters["var"], int(self.dataSize/self.noOfClasses))
-        pyplot.plot(sorted(class1), mlab.normpdf(x, class1Parameters["mean"], class1Parameters["var"]))
+        x = numpy.linspace(class1Parameters["mean"] - 3*math.sqrt(class1Parameters["var"]), class1Parameters["mean"] + 3*math.sqrt(class1Parameters["var"]), int(self.dataSize/self.noOfClasses))
+        pyplot.plot(sorted(class1), mlab.normpdf(x, class1Parameters["mean"], math.sqrt(class1Parameters["var"])))
         # Plotting gaussian curve for class 2
-        x = numpy.linspace(class2Parameters["mean"] - 3*class2Parameters["var"], class2Parameters["mean"] + 3*class2Parameters["var"], int(self.dataSize/self.noOfClasses))
-        pyplot.plot(sorted(class2), mlab.normpdf(x, class2Parameters["mean"], class2Parameters["var"]))
+        x = numpy.linspace(class2Parameters["mean"] - 3*math.sqrt(class2Parameters["var"]), class2Parameters["mean"] + 3*math.sqrt(class2Parameters["var"]), int(self.dataSize/self.noOfClasses))
+        pyplot.plot(sorted(class2), mlab.normpdf(x, class2Parameters["mean"], math.sqrt(class2Parameters["var"])))
         # Getting point of intersection of curves
         self.discriminantPoint = GetIntersection(class1Parameters, class2Parameters).getResult()
         # Displaying plot
