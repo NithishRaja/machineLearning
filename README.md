@@ -18,3 +18,7 @@ Code to classify dataset using perceptron algorithm
 * Initial cell in a row represents serial number of data
 * Final cell in a row represents class
 * Example: `S.No, feature1, feature2, feature3, class`
+
+## Features
+* Plot each epoch
+* Save plot as a `.png` file
