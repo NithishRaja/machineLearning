@@ -4,9 +4,7 @@
 #
 
 # Dependencies
-import re
 import numpy
-import math
 import json
 import matplotlib.pyplot as pyplot
 import matplotlib.mlab as mlab
