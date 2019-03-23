@@ -1,6 +1,6 @@
 # Fisher's Linear Discriminant
 
-Code to perform fisher's linear dicscriminant upon given dataset
+Code to perform fisher's linear discriminant upon given dataset
 
 ## Editing Code
 * Main code is present inside `index.py` file in root directory
