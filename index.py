@@ -81,31 +81,31 @@ class Index:
 
     # Initializing function to reduce data to single dimension
     def reduceDimension(self):
+        classfication = []
         # Converting data into single dimension
-        class1 = self.discriminant.dot(self.data[0])
-        class2 = self.discriminant.dot(self.data[1])
+        for i in range(self.noOfClasses):
+            classfication.append(self.discriminant.dot(self.data[i]))
         # Calling plotPoints function
-        self.plotPoints(class1, class2)
+        self.plotPoints(classfication)
 
     # Initializing function to plot data
-    def plotPoints(self, class1, class2):
+    def plotPoints(self, classfication):
+        classParams = []
         # Creating dummy array for y-axis
         y = numpy.zeros(int(self.dataSize/self.noOfClasses))
         # Getting parameters to fit data into normal distribution
-        class1Parameters = FitCurve(class1).getParameters()
-        class2Parameters = FitCurve(class2).getParameters()
-        # Plotting class 1 points
-        pyplot.plot(class1, y, "ro", markerfacecolor='none')
-        # Plotting class 1 points
-        pyplot.plot(class2, y, "go", markerfacecolor='none')
-        # Plotting gaussian curve for class 1
-        x = numpy.linspace(class1Parameters["mean"] - 3*math.sqrt(class1Parameters["var"]), class1Parameters["mean"] + 3*math.sqrt(class1Parameters["var"]), int(self.dataSize/self.noOfClasses))
-        pyplot.plot(sorted(class1), mlab.normpdf(x, class1Parameters["mean"], math.sqrt(class1Parameters["var"])))
-        # Plotting gaussian curve for class 2
-        x = numpy.linspace(class2Parameters["mean"] - 3*math.sqrt(class2Parameters["var"]), class2Parameters["mean"] + 3*math.sqrt(class2Parameters["var"]), int(self.dataSize/self.noOfClasses))
-        pyplot.plot(sorted(class2), mlab.normpdf(x, class2Parameters["mean"], math.sqrt(class2Parameters["var"])))
+        for i in range(self.noOfClasses):
+            classParams.append(FitCurve(classfication[i]).getParameters())
+        # Plotting data points
+        marker = ["ro", "go"]
+        for i in range(self.noOfClasses):
+            pyplot.plot(classfication[i], y, marker[i], markerfacecolor='none')
+        # Plotting gaussian curve for each class
+        for i in range(self.noOfClasses):
+            x = numpy.linspace(classParams[i]["mean"] - 3*math.sqrt(classParams[i]["var"]), classParams[i]["mean"] + 3*math.sqrt(classParams[i]["var"]), int(self.dataSize/self.noOfClasses))
+            pyplot.plot(x, mlab.normpdf(x, classParams[i]["mean"], math.sqrt(classParams[i]["var"])))
         # Getting point of intersection of curves
-        self.discriminantPoint = GetIntersection(class1Parameters, class2Parameters).getResult()
+        self.discriminantPoint = GetIntersection(classParams[0], classParams[1]).getResult()
         # Displaying plot
         pyplot.plot(self.discriminantPoint, 0, "bo")
         pyplot.show()
