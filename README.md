@@ -1,6 +1,6 @@
-# Fisher's Linear Discriminant
+# Perceptron
 
-Code to perform fisher's linear dicscriminant upon given dataset
+Code to classify dataset using perceptron algorithm
 
 ## Editing Code
 * Main code is present inside `index.py` file in root directory
@@ -8,6 +8,7 @@ Code to perform fisher's linear dicscriminant upon given dataset
 * No of features and data size can be changed in `config.json` file in root directory
 
 ## Running Code
+* Place file containing dataset in root directory
 * Run `python index.py` from root directory
 
 ## Dataset Model
