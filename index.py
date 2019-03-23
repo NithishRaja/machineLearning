@@ -21,6 +21,8 @@ class Index:
         # Reading config file
         file = ReadFile("config.json")
         config = json.loads(file.read())
+        # Setting file name
+        self.fileName = config.fileName
         # Setting no of classes
         self.noOfClasses = config["noOfClasses"]
         # Setting number of data available
@@ -39,7 +41,7 @@ class Index:
     # Initializing function to get data
     def getData(self):
         # Getting data from file
-        file = ReadCsvFile("dataset_1.csv")
+        file = ReadCsvFile(self.fileName)
         reader = file.read()
         # Iterating over data
         for row in reader:
