@@ -4,16 +4,11 @@
 #
 
 # Dependencies
-import re
 import numpy
-import math
 import json
 import matplotlib.pyplot as pyplot
-import matplotlib.mlab as mlab
 from helpers.readFile import ReadFile
 from helpers.readCsvFile import ReadCsvFile
-from helpers.getIntersection import GetIntersection
-from helpers.fitCurve import FitCurve
 
 # Initializing class
 class Index:
@@ -34,10 +29,10 @@ class Index:
         self.data = numpy.zeros((self.noOfClasses, self.noOfFeatures, int(self.dataSize/self.noOfClasses)))
         # Initializing counters for classes
         self.counter = numpy.zeros((self.noOfClasses))
-        # Initializing discriminant vector
-        self.discriminant = None
-        # Initializing discriminant point
-        self.discriminantPoint= None
+        # Setting learning rate
+        self.learningRate = config["learningRate"]
+        # Initializing weight vector
+        self.weightVector = numpy.arange(self.noOfFeatures+1, dtype=float)
 
     # Initializing function to get data
     def getData(self):
@@ -53,63 +48,52 @@ class Index:
             # Updating counter
             self.counter[int(row[3])]=self.counter[int(row[3])]+1
 
-        self.calculate()
-
-    # Initializing function to get mean
-    def calculate(self):
-        mean = []
-        difference = []
-        transpose = []
-        var = []
+    # Function to classify data
+    def classify(self):
+        # Counter for misclassified data
+        misclassifiedData = 0
+        # Iterating over each class
         for i in range(self.noOfClasses):
-            # Getting mean of features in i'th class
-            mean.append(numpy.mean(self.data[i], axis=1))
-            # Calculating Sw matrix
-            difference.append(numpy.transpose(numpy.subtract(numpy.transpose(self.data[i]), numpy.transpose(mean[i]))))
-            transpose.append(numpy.transpose(difference[i]))
-            var.append(difference[i].dot(transpose[i]))
-        # Calculating shared covariance matrix
-        sw = numpy.zeros(var[0].shape)
-        # Getting difference of mean
-        difference = mean[0]-mean[1]
-        for i in range(self.noOfClasses):
-            sw = sw+var[i]
-        # Calculating discriminant vector
-        self.discriminant = numpy.linalg.inv(sw).dot(difference)
-        # Calling function to reduce dimensions
-        self.reduceDimension()
-
-    # Initializing function to reduce data to single dimension
-    def reduceDimension(self):
-        classfication = []
-        # Converting data into single dimension
-        for i in range(self.noOfClasses):
-            classfication.append(self.discriminant.dot(self.data[i]))
-        # Calling plotPoints function
-        self.plotPoints(classfication)
+            # Iterating over data in each class
+            for j in range(int(self.dataSize/self.noOfClasses)):
+                value = self.weightVector[self.noOfFeatures]
+                # Iterating over each feature
+                for k in range(self.noOfFeatures):
+                    value = value + self.data[i][k][j]*self.weightVector[k]
+                # Checking if data is misclassified
+                if value*(i-0.5)<0:
+                    # Update counter for misclassified data
+                    misclassifiedData = misclassifiedData+1
+                    # Updating weight vector
+                    self.weightVector[self.noOfFeatures] = self.weightVector[self.noOfFeatures]+self.learningRate*2*(i-0.5)
+                    for k in range(self.noOfFeatures):
+                        self.weightVector[k] = self.weightVector[k]+self.learningRate*2*(i-0.5)*self.data[i][k][j]
+        # Returning no of misclassified data
+        return misclassifiedData
 
     # Initializing function to plot data
-    def plotPoints(self, classfication):
-        classParams = []
-        # Creating dummy array for y-axis
-        y = numpy.zeros(int(self.dataSize/self.noOfClasses))
-        # Getting parameters to fit data into normal distribution
-        for i in range(self.noOfClasses):
-            classParams.append(FitCurve(classfication[i]).getParameters())
+    def plotPoints(self):
         # Plotting data points
         marker = ["ro", "go"]
+        # Iterating over each class
         for i in range(self.noOfClasses):
-            pyplot.plot(classfication[i], y, marker[i], markerfacecolor='none')
-        # Plotting gaussian curve for each class
-        for i in range(self.noOfClasses):
-            x = numpy.linspace(classParams[i]["mean"] - 3*classParams[i]["sd"], classParams[i]["mean"] + 3*classParams[i]["sd"], int(self.dataSize/self.noOfClasses))
-            pyplot.plot(x, mlab.normpdf(x, classParams[i]["mean"], classParams[i]["sd"]))
-        # Getting point of intersection of curves
-        self.discriminantPoint = GetIntersection(classParams[0], classParams[1]).getResult()
+            # Iterating over data in each class
+            for j in range(int(self.dataSize/self.noOfClasses)):
+                pyplot.plot(self.data[i][0][j], self.data[i][1][j], marker[i], markerfacecolor='none')
+        # Plotting hyperplane to separate classes
+        x = numpy.linspace(-3, 3, 3)
+        y = -(self.weightVector[0]*x+self.weightVector[2])/self.weightVector[1]
+        pyplot.plot(x, y)
         # Displaying plot
-        pyplot.plot(self.discriminantPoint, 0, "bo")
         pyplot.show()
 
 # Creating object
-index  = Index()
+index = Index()
 index.getData()
+index.plotPoints()
+
+misclassifiedData = 1
+while misclassifiedData!=0:
+    misclassifiedData = index.classify()
+    print(misclassifiedData)
+index.plotPoints()
