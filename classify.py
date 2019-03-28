@@ -108,3 +108,22 @@ class Classify:
         pyplot.plot(self.discriminantPoint, 0, "bo")
         # Saving plot as an image
         pyplot.savefig("plot/"+self.fileName+"_plot.png")
+
+
+    # Initializing function to calculate error
+    def calculateError(self):
+        # Initializing counter for misclassified points
+        misclassifiedPoints = 0
+        # Array to hold reduced values of each data instance
+        classfication = []
+        # Converting data into single dimension
+        for i in range(self.noOfClasses):
+            classfication.append(self.discriminant.dot(self.data[i]))
+            # Iterating over all values
+            for j in classfication[i]:
+                # Checking if point has been misclassified
+                if (j>self.discriminantPoint and i==1) or (j<self.discriminantPoint and i==0):
+                    misclassifiedPoints = misclassifiedPoints+1
+        # Printing number of misclassified points and error %
+        print("No of misclassified points: ", misclassifiedPoints)
+        print("Error%: ", (misclassifiedPoints/self.dataSize)*100)
