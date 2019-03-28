@@ -24,3 +24,4 @@ Code to perform fisher's linear discriminant upon given dataset
 * Fit a gaussian curve to the transformed data
 * Find point where gaussian curves intersect
 * Save plot as a `.png` file
+* Calculate error % in classification
