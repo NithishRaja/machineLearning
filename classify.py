@@ -96,6 +96,7 @@ class Classify:
             classParams.append(FitCurve(classfication[i]).getParameters())
         # Plotting data points
         marker = ["ro", "go"]
+        # Seetting title for plot
         for i in range(self.noOfClasses):
             pyplot.plot(classfication[i], y, marker[i], markerfacecolor='none')
         # Plotting gaussian curve for each class
@@ -127,3 +128,13 @@ class Classify:
         # Printing number of misclassified points and error %
         print("No of misclassified points: ", misclassifiedPoints)
         print("Error%: ", (misclassifiedPoints/self.dataSize)*100)
+
+    # Function to classify given point
+    def classifyPoint(self, point):
+        # Converting data to one dimension
+        oneDPoint = self.discriminant.dot(point)
+        # Comparing data with discriminant
+        if self.discriminantPoint>oneDPoint:
+            print("class 1")
+        else:
+            print("class 0")
