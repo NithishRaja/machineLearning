@@ -15,7 +15,7 @@ if not os.path.exists("plot/"):
 # Creating object
 classify = Classify()
 # Plotting initial hyperplane
-classify.plotPoints("plot/initial_plot.png")
+classify.plotPoints("plot/initial_plot.png", "Initial plot")
 # Initializing counter for epoch
 epochCounter = 1
 # Initializing maximum number of epoch
@@ -25,7 +25,9 @@ misclassifiedData = 1
 # Iterating untill all data is correctly classified or maximum number of epoch is reached
 while misclassifiedData!=0 and epochCounter<epochLimit:
     misclassifiedData = classify.main()
-    # classify.plotPoints("plot/epoch_"+str(epochCounter)+".png")
+    classify.plotPoints("plot/epoch_"+str(epochCounter)+".png", "Epoch: "+str(epochCounter))
     epochCounter = epochCounter+1
 # Printing error %
 classify.calculateError()
+# Printing no of epoch
+print("Epoch: ", epochCounter-1)

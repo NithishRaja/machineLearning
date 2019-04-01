@@ -74,18 +74,27 @@ class Classify:
         return misclassifiedData
 
     # Initializing function to plot data
-    def plotPoints(self, plotName):
+    def plotPoints(self, plotName, title):
         # Plotting data points
+        # Setting class properties
         marker = ["ro", "go"]
+        # Setting title
+        pyplot.title(title)
         # Iterating over each class
         for i in range(self.noOfClasses):
             # Iterating over data in each class
             for j in range(int(self.dataSize/self.noOfClasses)):
-                pyplot.plot(self.data[i][0][j], self.data[i][1][j], marker[i], markerfacecolor='none')
+                # If first data in this class, add label
+                if j==0:
+                    pyplot.plot(self.data[i][0][j], self.data[i][1][j], marker[i], markerfacecolor='none', label="class "+str(i))
+                else:
+                    pyplot.plot(self.data[i][0][j], self.data[i][1][j], marker[i], markerfacecolor='none')
         # Plotting hyperplane to separate classes
         x = numpy.linspace(-3, 3, 3)
         y = -(self.weightVector[0]*x+self.weightVector[2])/self.weightVector[1]
         pyplot.plot(x, y)
+        # Setting label
+        pyplot.legend()
         # Saving plot as an image file
         pyplot.savefig(plotName)
         # Closing plot
