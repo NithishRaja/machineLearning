@@ -22,3 +22,5 @@ Code to classify dataset using perceptron algorithm
 ## Features
 * Plot each epoch
 * Save plot as a `.png` file
+* Calculate no of misclassified points
+* Calculate error percentage
