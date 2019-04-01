@@ -118,3 +118,17 @@ class Classify:
         # Printing number of misclassified data and error %
         print("No of misclassified data: ", misclassifiedData)
         print("Error %: ", (misclassifiedData/self.dataSize)*100)
+
+    # Function to classify new point
+    def classifyPoint(self, point):
+        distance = 0.0
+        # Calculating product between w vector and point
+        for i in range(self.noOfFeatures):
+            distance = distance + point[i]*self.weightVector[i]
+        # Adding bias
+        distance = distance + self.weightVector[self.noOfFeatures]
+        # Checking if data belongs to class 0 or class 1
+        if distance<0:
+            print("Class 0")
+        else:
+            print("Class 1")
