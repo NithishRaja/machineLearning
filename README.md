@@ -16,7 +16,7 @@ Code to perform fisher's linear discriminant upon given dataset
 * Each feature is present in a cell
 * Initial cell in a row represents serial number of data
 * Final cell in a row represents class
-* Example: `S.No, feature1, feature2, feature3, class`
+* Example: `S.No,feature1,feature2,feature3,class`
 
 ## Features
 * Display each class in a different colour
