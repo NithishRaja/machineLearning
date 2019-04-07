@@ -1,5 +1,9 @@
 # Ignoring data files
-data.txt
+*.txt
 *.csv
+
+# Ignoring cache
 __pycache__/*
+
+# Ignoring plot directory
 plot/
