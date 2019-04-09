@@ -1,6 +1,6 @@
 # Perceptron
 
-Code to classify dataset using perceptron algorithm
+Code to perform naive bayes analysis
 
 ## Editing Code
 * Main code is present inside `index.py` file in root directory
@@ -9,18 +9,17 @@ Code to classify dataset using perceptron algorithm
 
 ## Running Code
 * Place file containing dataset in root directory
+* Update data file name in `config.json` file
 * Run `python index.py` from root directory
 
 ## Dataset Model
-* Dataset is inside a csv file in root directory
-* Each data is represented in a row
-* Each feature is present in a cell
-* Initial cell in a row represents serial number of data
-* Final cell in a row represents class
-* Example: `S.No,feature1,feature2,feature3,class`
+* Dataset is inside a txt file
+* Each data instance is represented in a line
+* Initial word represents category of data
+* Second word indicates the class of data
+* Third word gives name of data file
+* Remaining words in line are the data
+* Example: `music neg 544.txt i was misled and thought i was buying the entire cd and it contains one song `
 
 ## Features
-* Plot each epoch
-* Save plot as a `.png` file
-* Calculate no of misclassified points
-* Calculate error percentage
+* Calculate frequency of each word and persist it to a file
