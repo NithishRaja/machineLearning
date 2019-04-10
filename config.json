@@ -1,5 +1,6 @@
 {
   "dataSize": 11914,
   "dataFileName": "dataset_1.csv",
-  "frequencyFileName": "frequencyData.json"
+  "frequencyFileName": "frequencyData.json",
+  "trainingSetPercentage": 80
 }

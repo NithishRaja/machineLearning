@@ -16,16 +16,23 @@ class Classify:
         # Reading config file
         file = ReadFile("config.json")
         config = json.loads(file.read())
-        # Setting file name
+        # Setting data size
+        self.dataSize = config["dataSize"]
+        # Setting data file name
         self.dataFileName = config["dataFileName"]
+        # Setting frequency file name
         self.frequencyFileName = config["frequencyFileName"]
+        # Setting training set split
+        self.trainingSetPercentage = config["trainingSetPercentage"]
+        # Setting validation set split
+        self.validationSetPercentage = 100 - self.trainingSetPercentage
         # Checking if frequency data is already available
         if !os.path.exists(self.frequencyFileName):
             # Getting frequency data
-            parse = Parse(self.dataFileName, self.frequencyFileName)
+            parse = Parse(self.dataFileName, self.frequencyFileName, self.dataSize, self.trainingSetPercentage)
             parse.main()
         # Setting number of data available
         self.dataSize = config["dataSize"]
 
     # Function to classify data
-    # def main(self):
+    def main(self):
