@@ -4,9 +4,8 @@
 #
 
 # Dependencies
-import os
-from parse import Parse
+from classify import Classify
 
-parse = Parse("naive_bayes_data.txt", "data.json")
-parse.getData()
-parse.writeFrequencyData()
+# Creating object
+classify  = Classify()
+# Calling main function

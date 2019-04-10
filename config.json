@@ -1,7 +1,5 @@
 {
-  "noOfClasses": 2,
-  "noOfFeatures": 2,
-  "dataSize": 1000,
-  "fileName": "dataset_1.csv",
-  "learningRate": 1
+  "dataSize": 11914,
+  "dataFileName": "dataset_1.csv",
+  "frequencyFileName": "frequencyData.json"
 }

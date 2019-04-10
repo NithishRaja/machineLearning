@@ -21,7 +21,7 @@ class Parse:
         }
 
     # Function to read file data
-    def getData(self):
+    def main(self):
         # Initializing variable to hold fileDescriptor
         file = None
         try:
@@ -43,6 +43,8 @@ class Parse:
                         self.frequency[words[1]][words[i]] = 1
             # Closing file
             file.close()
+        # Calling function to persist frequency data
+        self.writeFrequencyData(self)
 
     # Persist frequency data to file
     def writeFrequencyData(self):
