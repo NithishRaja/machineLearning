@@ -6,6 +6,7 @@
 # Dependencies
 import json
 import os
+import re
 from helpers.readFile import ReadFile
 from parse import Parse
 
@@ -39,10 +40,10 @@ class Classify:
         file = ReadFile(self.frequencyFileName)
         self.frequencyData = json.loads(file.read())
         # Initializing object to hold probability for positive and negative statements
-        self.prob = {}
+        self.probability = {}
         # Setting probability of each class
         for className in self.classes:
-            self.prob[className] = self.frequencyData[className+"Frequency"]/self.trainingSetSize
+            self.probability[className] = self.frequencyData[className+"Frequency"]/self.trainingSetSize
 
     # Function to classify data
     def main(self):
@@ -68,10 +69,21 @@ class Classify:
                     # Iterating over each word in current line
                     for i in range(3, len(words)):
                         # Calling function to get conditional probability of current word
-                        self.getConditionalFreqency(word[i])
+                        self.getConditionalProbability(words[i])
+                    print("Counter: ", counter)
+                    print("Probability: ", self.probability)
+                    print("pos: ", self.probability["pos"]/(self.probability["pos"]+self.probability["neg"]))
+                    print("neg: ", self.probability["neg"]/(self.probability["pos"]+self.probability["neg"]))
+                    break
             # Closing file
             file.close()
             # Calling function to persist frequency data
 
     # Function to get conditional frequency of given word
-    # def getConditionalFreqency(self, word):
+    def getConditionalProbability(self, word):
+        # Iterating over classes
+        for className in self.classes:
+            # Checking if word occured in training set, if word has not occcured ignore it
+            if word in self.frequencyData[className]:
+                # Word exists and probability is calculated
+                self.probability[className] = self.probability[className]*self.frequencyData[className][word]/self.frequencyData[className+"Frequency"]
