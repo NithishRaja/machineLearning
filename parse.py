@@ -10,20 +10,20 @@ import json
 # Initializing class
 class Parse:
     # Initializing constructor
-    def __init__(self, dataFileName, frequencyFileName, trainingSetSize):
+    def __init__(self, dataFileName, frequencyFileName, trainingSetSize, classes):
         # Setting data file path
         self.dataFileName = dataFileName
         # Setting frequency dile path
         self.frequencyFileName = frequencyFileName
         # Setting size of data to use for training data
         self.trainingSetSize = trainingSetSize
+        # Setting array to hold class names
+        self.classes = classes
         # Initializing object to hold word frequency
-        self.frequency = {
-            "pos": {},
-            "neg": {},
-            "posFrequency": 0,
-            "negFrequency": 0
-        }
+        self.frequency = {}
+        for className in self.classes:
+            self.frequency[className]={}
+            self.frequency[className+"Frequency"]=0
 
     # Function to read file data
     def main(self):

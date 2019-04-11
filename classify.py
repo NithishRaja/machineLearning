@@ -26,10 +26,12 @@ class Classify:
         self.trainingSetSize = int(self.dataSize*config["trainingSetPercentage"]/100)
         # Setting validation set split
         self.validationSetSize = self.dataSize - self.trainingSetSize
+        # Initializing array to hold all class names
+        self.classes = config["class"]
         # Checking if frequency data is already available
         if not os.path.exists(self.frequencyFileName):
             # Getting frequency data
-            parse = Parse(self.dataFileName, self.frequencyFileName, self.trainingSetSize)
+            parse = Parse(self.dataFileName, self.frequencyFileName, self.trainingSetSize, self.classes)
             parse.main()
         # Setting number of data available
         self.dataSize = config["dataSize"]
@@ -37,10 +39,10 @@ class Classify:
         file = ReadFile(self.frequencyFileName)
         self.frequencyData = json.loads(file.read())
         # Initializing object to hold probability for positive and negative statements
-        self.prob = {
-            "pos": self.frequencyData["posFrequency"]/self.trainingSetSize,
-            "neg": self.frequencyData["negFrequency"]/self.trainingSetSize
-        }
+        self.prob = {}
+        # Setting probability of each class
+        for className in self.classes:
+            self.prob[className] = self.frequencyData[className+"Frequency"]/self.trainingSetSize
 
     # Function to classify data
     def main(self):

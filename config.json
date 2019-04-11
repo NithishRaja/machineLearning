@@ -2,5 +2,6 @@
   "dataSize": 11914,
   "dataFileName": "naive_bayes_data.txt",
   "frequencyFileName": "frequencyData.json",
-  "trainingSetPercentage": 80
+  "trainingSetPercentage": 80,
+  "class": ["pos", "neg"]
 }
