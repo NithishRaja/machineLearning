@@ -22,5 +22,8 @@ Code to perform naive bayes analysis
 * Example: `music neg 544.txt i was misled and thought i was buying the entire cd and it contains one song `
 
 ## Features
+* Can classify more than 2 classes
 * Calculate frequency of each word and persist it to a file
 * Perform 80-20 data split for training and validation of data
+* Calculate probability of a data instance belonging to class
+* Calculate confusion matrix
