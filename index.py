@@ -9,4 +9,6 @@ from classify import Classify
 # Creating object
 classify  = Classify()
 # Calling main function
-classify.main()
+confusionMatrix = classify.main()
+# Printing confusion matrix
+print(confusionMatrix)

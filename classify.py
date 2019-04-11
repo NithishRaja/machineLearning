@@ -7,6 +7,7 @@
 import json
 import os
 import re
+import operator
 from helpers.readFile import ReadFile
 from parse import Parse
 
@@ -44,6 +45,13 @@ class Classify:
         # Setting probability of each class
         for className in self.classes:
             self.probability[className] = self.frequencyData[className+"Frequency"]/self.trainingSetSize
+        # Initializing object to hold values for confusion matrix
+        self.confusionMatrix = {}
+        for className in self.classes:
+            names = {}
+            for name in self.classes:
+                names[name] = 0
+            self.confusionMatrix[className] = names
 
     # Function to classify data
     def main(self):
@@ -70,14 +78,14 @@ class Classify:
                     for i in range(3, len(words)):
                         # Calling function to get conditional probability of current word
                         self.getConditionalProbability(words[i])
-                    print("Counter: ", counter)
-                    print("Probability: ", self.probability)
-                    print("pos: ", self.probability["pos"]/(self.probability["pos"]+self.probability["neg"]))
-                    print("neg: ", self.probability["neg"]/(self.probability["pos"]+self.probability["neg"]))
-                    break
+                    # Updating confusion matrix
+                    actualClass = words[1]
+                    predictedClass = max(self.probability.items(), key=operator.itemgetter(1))[0]
+                    self.confusionMatrix[actualClass][predictedClass] = self.confusionMatrix[actualClass][predictedClass]+1
             # Closing file
             file.close()
-            # Calling function to persist frequency data
+            # Returning confusion matrix
+            return self.confusionMatrix
 
     # Function to get conditional frequency of given word
     def getConditionalProbability(self, word):
