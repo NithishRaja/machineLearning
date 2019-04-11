@@ -1,5 +1,6 @@
 # Ignoring data files
 *.txt
 *.csv
+frequencyData.json
 __pycache__/*
 plot/
