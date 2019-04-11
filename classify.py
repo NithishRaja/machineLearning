@@ -23,16 +23,16 @@ class Classify:
         # Setting frequency file name
         self.frequencyFileName = config["frequencyFileName"]
         # Setting training set split
-        self.trainingSetPercentage = config["trainingSetPercentage"]
+        self.trainingSetSize = int(self.dataSize*config["trainingSetPercentage"]/100)
         # Setting validation set split
-        self.validationSetPercentage = 100 - self.trainingSetPercentage
+        self.validationSetSize = self.dataSize - self.trainingSetSize
         # Checking if frequency data is already available
-        if !os.path.exists(self.frequencyFileName):
+        if not os.path.exists(self.frequencyFileName):
             # Getting frequency data
-            parse = Parse(self.dataFileName, self.frequencyFileName, self.dataSize, self.trainingSetPercentage)
+            parse = Parse(self.dataFileName, self.frequencyFileName, self.trainingSetSize)
             parse.main()
         # Setting number of data available
         self.dataSize = config["dataSize"]
 
     # Function to classify data
-    def main(self):
+    # def main(self):

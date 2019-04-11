@@ -10,15 +10,13 @@ import json
 # Initializing class
 class Parse:
     # Initializing constructor
-    def __init__(self, dataFileName, frequencyFileName, dataSize, trainingSetPercentage):
+    def __init__(self, dataFileName, frequencyFileName, trainingSetSize):
         # Setting data file path
         self.dataFileName = dataFileName
         # Setting frequency dile path
         self.frequencyFileName = frequencyFileName
-        # Setting data size
-        self.dataSize = dataSize
-        # Setting percentage of data to use for training data
-        self.trainingSetPercentage = trainingSetPercentage
+        # Setting size of data to use for training data
+        self.trainingSetSize = trainingSetSize
         # Initializing object to hold word frequency
         self.frequency = {
             "pos": {},
@@ -36,8 +34,11 @@ class Parse:
             # Printing error
             print("file not found at "+self.dataFileName)
         else:
+            # Initializing counter for getting number of data instances
+            counter = 0
             # iterating over each line in data
             for line in file:
+                # Splitting line into separate words
                 words = re.split(" ", line)
                 # Iterating over each word in current line
                 for i in range(3, len(words)):
@@ -46,10 +47,13 @@ class Parse:
                         self.frequency[words[1]][words[i]] = self.frequency[words[1]][words[i]]+1
                     else:
                         self.frequency[words[1]][words[i]] = 1
+                # Exit loop if trainingSetSize is reached
+                if counter>=self.trainingSetSize:
+                    break
             # Closing file
             file.close()
         # Calling function to persist frequency data
-        self.writeFrequencyData(self)
+        self.writeFrequencyData()
 
     # Persist frequency data to file
     def writeFrequencyData(self):

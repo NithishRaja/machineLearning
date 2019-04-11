@@ -1,6 +1,6 @@
 {
   "dataSize": 11914,
-  "dataFileName": "dataset_1.csv",
+  "dataFileName": "naive_bayes_data.txt",
   "frequencyFileName": "frequencyData.json",
   "trainingSetPercentage": 80
 }
