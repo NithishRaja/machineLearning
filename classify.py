@@ -42,9 +42,7 @@ class Classify:
         self.frequencyData = json.loads(file.read())
         # Initializing object to hold probability for positive and negative statements
         self.probability = {}
-        # Setting probability of each class
-        for className in self.classes:
-            self.probability[className] = self.frequencyData[className+"Frequency"]/self.trainingSetSize
+        self.resetProbabilities()
         # Initializing object to hold values for confusion matrix
         self.confusionMatrix = {}
         for className in self.classes:
@@ -52,6 +50,12 @@ class Classify:
             for name in self.classes:
                 names[name] = 0
             self.confusionMatrix[className] = names
+
+    # Function to reset probabilities
+    def resetProbabilities(self):
+        # Setting probability of each class
+        for className in self.classes:
+            self.probability[className] = self.frequencyData[className+"Frequency"]/self.trainingSetSize
 
     # Function to classify data
     def main(self):
@@ -78,10 +82,13 @@ class Classify:
                     for i in range(3, len(words)):
                         # Calling function to get conditional probability of current word
                         self.getConditionalProbability(words[i])
-                    # Updating confusion matrix
+                    # Setting actual class and predicted classs
                     actualClass = words[1]
                     predictedClass = max(self.probability.items(), key=operator.itemgetter(1))[0]
+                    # Updating confusion matrix
                     self.confusionMatrix[actualClass][predictedClass] = self.confusionMatrix[actualClass][predictedClass]+1
+                    # Resetting probability
+                    self.resetProbabilities()
             # Closing file
             file.close()
             # Returning confusion matrix
