@@ -23,3 +23,4 @@ Code to perform naive bayes analysis
 
 ## Features
 * Calculate frequency of each word and persist it to a file
+* Perform 80-20 data split for training and validation of data
