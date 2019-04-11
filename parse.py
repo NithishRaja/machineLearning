@@ -20,7 +20,9 @@ class Parse:
         # Initializing object to hold word frequency
         self.frequency = {
             "pos": {},
-            "neg": {}
+            "neg": {},
+            "posFrequency": 0,
+            "negFrequency": 0
         }
 
     # Function to read file data
@@ -38,8 +40,12 @@ class Parse:
             counter = 0
             # iterating over each line in data
             for line in file:
+                # Updating counter
+                counter = counter + 1
                 # Splitting line into separate words
                 words = re.split(" ", line)
+                # Updating class frequency
+                self.frequency[words[1]+"Frequency"] = self.frequency[words[1]+"Frequency"]+1
                 # Iterating over each word in current line
                 for i in range(3, len(words)):
                     # Update frequency of word
@@ -52,8 +58,8 @@ class Parse:
                     break
             # Closing file
             file.close()
-        # Calling function to persist frequency data
-        self.writeFrequencyData()
+            # Calling function to persist frequency data
+            self.writeFrequencyData()
 
     # Persist frequency data to file
     def writeFrequencyData(self):
