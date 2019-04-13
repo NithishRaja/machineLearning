@@ -108,7 +108,7 @@ class Classify:
         # Plotting discriminating point
         pyplot.plot(self.discriminantPoint, 0, "bo")
         # Saving plot as an image
-        pyplot.savefig("plot/"+self.fileName+"_plot.png")
+        pyplot.savefig("plot/transformed_plot.png")
 
 
     # Initializing function to calculate error

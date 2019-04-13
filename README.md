@@ -8,6 +8,8 @@ Code to perform fisher's linear discriminant upon given dataset
 * No of features and data size can be changed in `config.json` file in root directory
 
 ## Running Code
+* Place file containing data inside `dataset` directory
+* Update data file name in `config.json` file
 * Run `python index.py` from root directory
 
 ## Dataset Model
