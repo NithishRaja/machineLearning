@@ -8,7 +8,7 @@ Code to perform naive bayes analysis
 * No of features and data size can be changed in `config.json` file in root directory
 
 ## Running Code
-* Place file containing dataset in root directory
+* Place file containing dataset in `dataset` directory
 * Update data file name in `config.json` file
 * Run `python index.py` from root directory
 

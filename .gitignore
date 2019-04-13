@@ -1,6 +1,11 @@
 # Ignoring data files
-*.txt
-*.csv
-frequencyData.json
+dataset/*
+!dataset/naive_bayes_data.txt
+
+
+# Ignoring python cache
 __pycache__/*
+*.pyc
+
+# Ignoring plot folder
 plot/
