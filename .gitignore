@@ -1,7 +1,11 @@
 # Ignoring data files
-data.txt
-*.csv
-*.txt
+dataset/*
+!dataset/dataset_*.csv
+
+
+# Ignoring python cache
 __pycache__/*
-plot/
 *.pyc
+
+# Ignoring plot folder
+plot/
