@@ -2,6 +2,6 @@
   "noOfClasses": 2,
   "noOfFeatures": 2,
   "dataSize": 1000,
-  "fileName": "dataset_1.csv",
+  "fileName": "dataset/dataset_1.csv",
   "learningRate": 1
 }

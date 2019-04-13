@@ -3,7 +3,8 @@ dataset/*
 !dataset/dataset_*.csv
 
 # Ignoring cache
-__pycache__/*
+__pycache__/
+*.pyc
 
 # Ignoring plot directory
 plot/
