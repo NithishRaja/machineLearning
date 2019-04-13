@@ -1,6 +1,7 @@
 # Ignoring data files
 data.txt
 *.csv
+*.txt
 __pycache__/*
 plot/
 *.pyc
