@@ -1,6 +1,6 @@
 # Ignoring data files
-*.txt
-*.csv
+dataset/*
+!dataset/dataset_*.csv
 
 # Ignoring cache
 __pycache__/*
