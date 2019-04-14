@@ -9,7 +9,6 @@ import json
 import csv
 import matplotlib.pyplot as pyplot
 from helpers.readFile import ReadFile
-from helpers.readCsvFile import ReadCsvFile
 
 # Initializing class
 class Classify:
