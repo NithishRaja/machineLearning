@@ -2,6 +2,6 @@
   "noOfClasses": 2,
   "noOfFeatures": 2,
   "dataSize": 1000,
-  "fileName": "dataset/dataset_1.csv",
+  "fileName": "dataset/data_logistic.txt",
   "learningRate": 1
 }
