@@ -10,7 +10,6 @@ import csv
 import matplotlib.pyplot as pyplot
 import matplotlib.mlab as mlab
 from helpers.readFile import ReadFile
-from helpers.readCsvFile import ReadCsvFile
 from helpers.getIntersection import GetIntersection
 from helpers.fitCurve import FitCurve
 
