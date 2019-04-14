@@ -99,7 +99,7 @@ class Classify:
         # Iterating over each class
         for i in range(self.noOfClasses):
             # Iterating over data in each class
-            for j in range(self.counter[i]):
+            for j in range(int(self.counter[i])):
                 value = 0
                 # Iterating over each feature
                 for k in range(self.noOfFeatures):
