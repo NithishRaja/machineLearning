@@ -1,6 +1,6 @@
 {
   "noOfClasses": 2,
-  "noOfFeatures": 2,
+  "noOfFeatures": 4,
   "dataSize": 1000,
   "fileName": "dataset/data_logistic.txt",
   "learningRate": 1
