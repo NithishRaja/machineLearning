@@ -6,6 +6,7 @@
 # Dependencies
 import numpy
 import json
+import csv
 import matplotlib.pyplot as pyplot
 from helpers.readFile import ReadFile
 from helpers.readCsvFile import ReadCsvFile
@@ -26,7 +27,7 @@ class Classify:
         # Setting no of features in each data
         self.noOfFeatures = config["noOfFeatures"]
         # Initializing data object (Data is created asuming equal number of training data is available for all classes)
-        self.data = numpy.zeros((self.noOfClasses, self.noOfFeatures, int(self.dataSize/self.noOfClasses)))
+        self.data = []
         # Initializing counters for classes
         self.counter = numpy.zeros((self.noOfClasses))
         # Setting learning rate
@@ -39,16 +40,27 @@ class Classify:
     # Initializing function to get data
     def getData(self):
         # Getting data from file
-        file = ReadCsvFile(self.fileName)
-        reader = file.read()
-        # Iterating over data
+        file = open(self.fileName, "r")
+        reader = csv.reader(file)
+        # Iterating over data to get no of instances for each class
+        for row in reader:
+            # Updating counter
+            self.counter[int(row[-1])]=self.counter[int(row[-1])]+1
+        # Setting Array size for data
+        for i in range(self.noOfClasses):
+            self.data.append(numpy.zeros((self.noOfFeatures, int(self.counter[i])), dtype=float))
+        # Resetting file to top
+        file.seek(0)
+        # Resetting counter
+        self.counter = numpy.zeros((self.noOfClasses))
+        # Storing data instances in self.data
         for row in reader:
             # Iterating over features
             for i in range(self.noOfFeatures):
                 # Storing features in data object
-                self.data[int(row[3])][i][int(self.counter[int(row[3])])] = row[i+1]
+                self.data[int(row[-1])][i][int(self.counter[int(row[-1])])] = row[i+1]
             # Updating counter
-            self.counter[int(row[3])]=self.counter[int(row[3])]+1
+            self.counter[int(row[-1])]=self.counter[int(row[-1])]+1
 
     # Function to classify data
     def main(self):
