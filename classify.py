@@ -33,7 +33,7 @@ class Classify:
         # Setting learning rate
         self.learningRate = config["learningRate"]
         # Initializing weight vector
-        self.weightVector = numpy.arange(self.noOfFeatures+1, dtype=float)
+        self.weightVector = numpy.arange(self.noOfFeatures, dtype=float)
         # Calling function to get data
         self.getData()
 
@@ -51,6 +51,8 @@ class Classify:
             self.data.append(numpy.zeros((self.noOfFeatures, int(self.counter[i])), dtype=float))
         # Resetting file to top
         file.seek(0)
+        # Setting data size
+        self.dataSize = sum(self.counter)
         # Resetting counter
         self.counter = numpy.zeros((self.noOfClasses))
         # Storing data instances in self.data
