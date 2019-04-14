@@ -25,8 +25,9 @@ misclassifiedData = 1
 # Iterating untill all data is correctly classified or maximum number of epoch is reached
 while misclassifiedData!=0 and epochCounter<epochLimit:
     misclassifiedData = classify.main()
-    # classify.plotPoints("plot/epoch_"+str(epochCounter)+".png", "Epoch: "+str(epochCounter))
+    # Update epoch counter
     epochCounter = epochCounter+1
+classify.plotPoints("plot/final_plot.png", "Final plot")
 # Printing error %
 classify.calculateError()
 # Printing no of epoch
