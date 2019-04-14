@@ -9,6 +9,7 @@ import json
 import csv
 import matplotlib.pyplot as pyplot
 from helpers.readFile import ReadFile
+from helpers.sigmoid import sigmoid
 
 # Initializing class
 class Classify:
@@ -66,25 +67,29 @@ class Classify:
 
     # Function to classify data
     def main(self):
-        # Counter for misclassified data
+        # Initializing counter for misclassified data
         misclassifiedData = 0
         # Iterating over each class
         for i in range(self.noOfClasses):
             # Iterating over data in each class
-            for j in range(int(self.dataSize/self.noOfClasses)):
-                value = self.weightVector[self.noOfFeatures]
+            for j in range(int(self.counter[i])):
+                value = 0
                 # Iterating over each feature
                 for k in range(self.noOfFeatures):
-                    value = value + self.data[i][k][j]*self.weightVector[k]
+                    # calculating w*x
+                    value = value + self.weightVector[k]*self.data[i][k][j]
+                # Applying sigmoid function
+                value = sigmoid(value)
+                # Getting predicted class
+                predictedClass = 1 if value > 0.5 else 0
                 # Checking if data is misclassified
-                if value*(i-0.5)<0:
-                    # Update counter for misclassified data
-                    misclassifiedData = misclassifiedData+1
-                    # Updating weight vector
-                    self.weightVector[self.noOfFeatures] = self.weightVector[self.noOfFeatures]+self.learningRate*2*(i-0.5)
+                if not predictedClass == i:
+                    # Updating misclassified data counter
+                    misclassifiedData = misclassifiedData + 1
+                    # Update weight vector
                     for k in range(self.noOfFeatures):
-                        self.weightVector[k] = self.weightVector[k]+self.learningRate*2*(i-0.5)*self.data[i][k][j]
-        # Returning no of misclassified data
+                        self.weightVector[k] = self.weightVector[k]-self.learningRate*(predictedClass-i)*self.data[i][k][j]
+        # Returning misclassified data
         return misclassifiedData
 
     # Initializing function to calculate error %
@@ -94,28 +99,22 @@ class Classify:
         # Iterating over each class
         for i in range(self.noOfClasses):
             # Iterating over data in each class
-            for j in range(int(self.dataSize/self.noOfClasses)):
-                value = self.weightVector[self.noOfFeatures]
+            for j in range(self.counter[i]):
+                value = 0
                 # Iterating over each feature
                 for k in range(self.noOfFeatures):
-                    value = value + self.data[i][k][j]*self.weightVector[k]
+                    # calculating w*x
+                    value = value + self.weightVector[k]*self.data[i][k][j]
+                # Applying sigmoid function
+                value = sigmoid(value)
+                # Getting predicted class
+                predictedClass = 1 if value > 0.5 else 0
                 # Checking if data is misclassified
-                if (value<0 and i==1) or (value>0 and i==0):
-                    misclassifiedData = misclassifiedData+1
-        # Printing number of misclassified data and error %
-        print("No of misclassified data: ", misclassifiedData)
-        print("Error %: ", (misclassifiedData/self.dataSize)*100)
+                if not predictedClass == i:
+                    # Updating misclassified data counter
+                    misclassifiedData = misclassifiedData + 1
+        # Returning misclassified data
+        return misclassifiedData
 
     # Function to classify new point
-    def classifyPoint(self, point):
-        distance = 0.0
-        # Calculating product between w vector and point
-        for i in range(self.noOfFeatures):
-            distance = distance + point[i]*self.weightVector[i]
-        # Adding bias
-        distance = distance + self.weightVector[self.noOfFeatures]
-        # Checking if data belongs to class 0 or class 1
-        if distance<0:
-            print("Class 0")
-        else:
-            print("Class 1")
+    # def classifyPoint(self, point):
