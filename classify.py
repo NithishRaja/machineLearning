@@ -55,6 +55,7 @@ class Classify:
             for i in range(self.noOfFeatures):
                 # Storing features in data object
                 self.data[int(row[-1])][i][int(self.counter[int(row[-1])])] = row[i+1]
+            print(self.data[0][:][1])
 
     # Function to classify data
     def main(self):
