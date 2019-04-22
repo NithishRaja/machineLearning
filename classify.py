@@ -88,7 +88,7 @@ class Classify:
                     misclassifiedData = misclassifiedData + 1
                     # Update weight vector
                     for k in range(self.noOfFeatures):
-                        self.weightVector[k] = self.weightVector[k]-self.learningRate*(predictedClass-i)*self.data[i][k][j]
+                        self.weightVector[k] = self.weightVector[k]-self.learningRate*((predictedClass-i)*self.data[i][k][j]+0.01*self.weightVector[k])
         # Returning misclassified data
         return misclassifiedData
 
