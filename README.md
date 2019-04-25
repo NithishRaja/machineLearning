@@ -7,3 +7,4 @@ Each branch contains code for implementing a different machine learning algorith
 * Linear discriminant
 * Perceptron
 * Naive bayes classifier
+* Logistic regression
