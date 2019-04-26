@@ -21,3 +21,4 @@ while misclassifiedData!=0 and epochCounter<epochLimit:
     epochCounter = epochCounter+1
 # Printing no of epoch
 print("Epoch: ", epochCounter-1)
+print("Error: ", classify.calculateError())
