@@ -1,4 +1,4 @@
-# Perceptron
+# Logistic Regression
 
 Code to classify dataset using logistic regression
 
