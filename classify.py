@@ -100,5 +100,13 @@ class Classify:
         for className in self.classes:
             # Checking if word occured in training set, if word has not occcured ignore it
             if word in self.frequencyData[className]:
-                # Word exists and probability is calculated
-                self.probability[className] = self.probability[className]*self.frequencyData[className][word]/self.frequencyData[className+"Frequency"]
+                # Initializing variable to hold total occurances of current word
+                total = 0
+                # Iterating over all classes
+                for cName in self.classes:
+                    # Getting total occurances of current word
+                    total = total + self.frequencyData[cName][word] if word in self.frequencyData[cName] else 0
+                if total != 0:
+                    # Word exists and probability is calculated
+                    self.probability[className] = self.probability[className]*self.frequencyData[className][word]/(total)
+            self.probability[className] = self.probability[className]*self.frequencyData[className+"Frequency"]/self.trainingSetSize
