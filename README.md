@@ -1,4 +1,4 @@
-# Perceptron
+# Naive Bayes
 
 Code to perform naive bayes analysis
 
