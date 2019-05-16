@@ -1,7 +1,6 @@
 {
-  "noOfClasses": 2,
-  "noOfFeatures": 2,
-  "dataSize": 1000,
-  "fileName": "dataset/dataset_1.csv",
+  "noOfClasses": 3,
+  "noOfFeatures": 13,
+  "fileName": "dataset/wine.csv",
   "learningRate": 1
 }

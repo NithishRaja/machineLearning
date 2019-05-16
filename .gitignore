@@ -1,6 +1,6 @@
 # Ignoring data files
 dataset/*
-!dataset/dataset_*.csv
+!dataset/wine.csv
 
 # Ignoring cache
 __pycache__/
