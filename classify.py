@@ -119,4 +119,16 @@ class Classify:
         return distance
 
     # Initializing function to calculate error %
-    # def calculateError(self):
+    def calculateError(self):
+        error = 0
+        # Iterating over each class
+        for i in range(self.noOfClasses):
+            # Iterating over each data in current class
+            for j in range(self.counter[i]):
+                # Calling function to calculate distance
+                result = self.calculateDistance(self.data[i][j])
+                # Checking if data is misclassified
+                if result != i:
+                    # Updating error
+                    error = error + 1
+        return error
