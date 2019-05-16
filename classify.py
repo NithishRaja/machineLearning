@@ -19,21 +19,26 @@ class Classify:
         config = json.loads(file.read())
         # Setting file name
         self.fileName = config["fileName"]
+        # Setting data size
+        self.dataSize = config["dataSize"]
         # Setting no of classes
         self.noOfClasses = config["noOfClasses"]
-        # Setting number of data available
-        self.dataSize = 0
         # Setting no of features in each data
         self.noOfFeatures = config["noOfFeatures"]
+        # Setting number of nodes
+        self.noOfNodes = config["noOfNodes"]
         # Initializing data object
-        self.data = []
-        # self.data = numpy.zeros((self.noOfClasses, self.noOfFeatures, int(self.dataSize/self.noOfClasses)))
+        self.data = numpy.zeros((self.dataSize, self.noOfFeatures))
+        # Initializing array to store expected output
+        self.expectedOutput = numpy.zeros(self.dataSize)
         # Initializing counters for classes
-        self.counter = numpy.zeros((self.noOfClasses))
+        self.counter = 0
         # Setting learning rate
         self.learningRate = config["learningRate"]
-        # Initializing weight vector
-        self.weightVector = numpy.arange(self.noOfFeatures, dtype=float)
+        # Initializing first layer weights
+        self.layerOneWeight = numpy.random.rand(self.noOfFeatures, self.noOfNodes)
+        # Initializing second layer weights
+        self.layerTwoWeights = numpy.random.rand(self.noOfNodes)
         # Calling function to get data
         self.getData()
 
@@ -44,28 +49,18 @@ class Classify:
         reader = csv.reader(file)
         # Iterating over data to get no of instances for each class
         for row in reader:
-            # Updating counter
-            self.counter[int(row[-1])]=self.counter[int(row[-1])]+1
-        # Setting Array size for data
-        for i in range(self.noOfClasses):
-            self.data.append(numpy.zeros((self.noOfFeatures, int(self.counter[i])), dtype=float))
-        # Resetting file to top
-        file.seek(0)
-        # Setting data size
-        self.dataSize = sum(self.counter)
-        # Resetting counter
-        self.counter = numpy.zeros((self.noOfClasses))
-        # Storing data instances in self.data
-        for row in reader:
-            # Iterating over features
+            # Iterating over each feature
             for i in range(self.noOfFeatures):
-                # Storing features in data object
-                self.data[int(row[-1])][i][int(self.counter[int(row[-1])])] = row[i]
+                # Storing data
+                self.data[self.counter][i] = row[i]
+            # Storing expected output
+            self.expectedOutput[self.counter] = row[-1]
             # Updating counter
-            self.counter[int(row[-1])]=self.counter[int(row[-1])]+1
+            self.counter = self.counter + 1
 
     # Function to classify data
     # def main(self):
+
 
     # Initializing function to calculate error %
     # def calculateError(self):
