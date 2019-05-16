@@ -1,11 +1,12 @@
-# Logistic Regression
+# Neural Network
 
-Code to classify dataset using logistic regression
+Code to classify dataset using a neural network
 
 ## Editing Code
 * Main code is present inside `index.py` file in root directory
 * Helper functions are present in `helpers/` directory
 * No of features and data size can be changed in `config.json` file in root directory
+* No of nodes in hidden layer can be changed in `config.json` file
 
 ## Running Code
 * Place file containing dataset in `dataset` directory

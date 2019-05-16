@@ -7,7 +7,6 @@
 import numpy
 import json
 import csv
-import matplotlib.pyplot as pyplot
 from helpers.readFile import ReadFile
 from helpers.sigmoid import sigmoid
 
@@ -66,55 +65,7 @@ class Classify:
             self.counter[int(row[-1])]=self.counter[int(row[-1])]+1
 
     # Function to classify data
-    def main(self):
-        # Initializing counter for misclassified data
-        misclassifiedData = 0
-        # Iterating over each class
-        for i in range(self.noOfClasses):
-            # Iterating over data in each class
-            for j in range(int(self.counter[i])):
-                value = 0
-                # Iterating over each feature
-                for k in range(self.noOfFeatures):
-                    # calculating w*x
-                    value = value + self.weightVector[k]*self.data[i][k][j]
-                # Applying sigmoid function
-                value = sigmoid(value)
-                # Getting predicted class
-                predictedClass = 1 if value > 0.5 else 0
-                # Checking if data is misclassified
-                if not predictedClass == i:
-                    # Updating misclassified data counter
-                    misclassifiedData = misclassifiedData + 1
-                    # Update weight vector
-                    for k in range(self.noOfFeatures):
-                        self.weightVector[k] = self.weightVector[k]-self.learningRate*((predictedClass-i)*self.data[i][k][j]+0.01*self.weightVector[k])
-        # Returning misclassified data
-        return misclassifiedData
+    # def main(self):
 
     # Initializing function to calculate error %
-    def calculateError(self):
-        # Initializing counter for misclassified data
-        misclassifiedData = 0
-        # Iterating over each class
-        for i in range(self.noOfClasses):
-            # Iterating over data in each class
-            for j in range(int(self.counter[i])):
-                value = 0
-                # Iterating over each feature
-                for k in range(self.noOfFeatures):
-                    # calculating w*x
-                    value = value + self.weightVector[k]*self.data[i][k][j]
-                # Applying sigmoid function
-                value = sigmoid(value)
-                # Getting predicted class
-                predictedClass = 1 if value > 0.5 else 0
-                # Checking if data is misclassified
-                if not predictedClass == i:
-                    # Updating misclassified data counter
-                    misclassifiedData = misclassifiedData + 1
-        # Returning misclassified data
-        return misclassifiedData
-
-    # Function to classify new point
-    # def classifyPoint(self, point):
+    # def calculateError(self):
