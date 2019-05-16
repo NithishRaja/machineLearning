@@ -1,6 +1,5 @@
 {
   "noOfClasses": 3,
   "noOfFeatures": 13,
-  "fileName": "dataset/wine.csv",
-  "learningRate": 1
+  "fileName": "dataset/wine.csv"
 }

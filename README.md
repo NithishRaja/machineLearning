@@ -13,6 +13,10 @@ Code to classify dataset using k means classifier algorithm
 * Run `python index.py` from root directory
 
 ## Dataset Model
-
+* Dataset is inside a csv file in dataset directory
+* Each data is represented in a row
+* Each feature is present in a cell
+* Initial cell in a row represents class of data
+* Example: `class,feature1,feature2,feature3`
 
 ## Features
