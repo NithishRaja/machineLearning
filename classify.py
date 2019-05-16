@@ -91,7 +91,7 @@ class Classify:
         # Iterating over each class
         for i in range(self.noOfClasses):
             # Calculating distance
-            dist = math.sqrt(sum(numpy.square(self.mean[i]-data)))
+            dist = sum(numpy.absolute(self.mean[i]-data))
             # Checking if minimum distance has a value
             if min == None:
                 min = dist
