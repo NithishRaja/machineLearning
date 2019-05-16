@@ -20,4 +20,4 @@ while distanceAllowed<distance:
     # Calling function to get no of misclassified data
     error = classify.calculateError()
     # Printing no of misclassified data
-    print("error: ", error)
+    print("error: ", error*100/1372)

@@ -22,3 +22,4 @@ Code to classify dataset using k means classifier algorithm
 ## Features
 * Gives no of misclassified points
 * Similarity measures can be easily changed
+* Current implementation uses Minkowski distance as a similarity measure
