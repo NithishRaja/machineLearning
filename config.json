@@ -1,5 +1,6 @@
 {
   "noOfClasses": 2,
   "noOfFeatures": 4,
-  "fileName": "dataset/wine.csv"
+  "fileName": "dataset/wine.csv",
+  "maximumDistance": 0
 }

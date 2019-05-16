@@ -79,7 +79,9 @@ class Classify:
                 # Updating cluster size
                 self.clusterSize[result] = self.clusterSize[result] + 1
         # Calling function to calculate new mean
-        self.calculateNewMean()
+        distance = self.calculateNewMean()
+        # Returning maximum distance
+        return max(distance)
 
     # Function to calculate distance of data from each mean and return minimum
     def calculateDistance(self, data):
@@ -113,12 +115,8 @@ class Classify:
             distance[i] = math.sqrt(sum(numpy.square(self.mean[i]-newMean[i])))
         # Updating mean
         self.mean = newMean
-        print(distance)
-        # # Returning distance
-        # return distance
+        # Returning distance
+        return distance
 
     # Initializing function to calculate error %
     # def calculateError(self):
-
-    # Function to classify new point
-    # def classifyPoint(self, point):
