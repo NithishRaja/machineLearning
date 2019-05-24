@@ -8,6 +8,7 @@ from classify import Classify
 
 # Creating object
 classify = Classify()
+classify.main()
 # # Initializing counter for epoch
 # epochCounter = 1
 # # Initializing maximum number of epoch

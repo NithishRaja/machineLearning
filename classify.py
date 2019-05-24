@@ -7,6 +7,7 @@
 import numpy
 import json
 import csv
+import math
 from helpers.readFile import ReadFile
 from helpers.sigmoid import sigmoid
 
@@ -38,7 +39,7 @@ class Classify:
         # Initializing first layer weights
         self.layerOneWeight = numpy.random.rand(self.noOfFeatures, self.noOfNodes)
         # Initializing second layer weights
-        self.layerTwoWeights = numpy.random.rand(self.noOfNodes)
+        self.layerTwoWeight = numpy.random.rand(self.noOfNodes)
         # Calling function to get data
         self.getData()
 
@@ -59,8 +60,30 @@ class Classify:
             self.counter = self.counter + 1
 
     # Function to classify data
-    # def main(self):
-
+    def main(self):
+        # Calculating layer one input
+        self.layerOneInput = self.data@self.layerOneWeight
+        # Calculating layer one output
+        self.layerOneOutput = numpy.vectorize(self.sigmoid)(self.layerOneInput)
+        # Calculating layer two input
+        self.layerTwoInput = self.layerOneOutput@self.layerTwoWeight
+        # Calculating layer two output
+        self.layerTwoOutput = numpy.vectorize(self.sigmoid)(self.layerTwoInput)
+        # Calling function to calculate misclassified points
+        self.calculateError()
 
     # Initializing function to calculate error %
-    # def calculateError(self):
+    def calculateError(self):
+        misclassifiedData = 0
+        # Iterating over each data
+        for i in range(self.dataSize):
+            # Checking if calculated class and actual class match
+            if (self.layerTwoOutput[i] > 0.5 and self.expectedOutput[i] == 0) or (self.layerTwoOutput[i] < 0.5 and self.expectedOutput[i] == 1):
+                misclassifiedData = misclassifiedData + 1
+        # Display no of misclassified data
+        print("Error: ", misclassifiedData/self.dataSize*100)
+
+    # Function to calculate sigmoid value
+    def sigmoid(self, value):
+        # Returning sigmoid value
+        return 1/(1+math.exp(-value))
