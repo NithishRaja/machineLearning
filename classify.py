@@ -69,6 +69,8 @@ class Classify:
         self.layerTwoInput = self.layerOneOutput@self.layerTwoWeight
         # Calculating layer two output
         self.layerTwoOutput = numpy.vectorize(self.sigmoid)(self.layerTwoInput)
+        # Calculating weight update for layer two
+        # self.layerTwoUpdate = numpy.multiply(self.layerOneOutput, self.layerTwoOutput - self.expectedOutput)
         # Calling function to calculate misclassified points
         self.calculateError()
 
@@ -77,8 +79,9 @@ class Classify:
         misclassifiedData = 0
         # Iterating over each data
         for i in range(self.dataSize):
+            self.result = numpy.vectorize(self.round)(self.layerTwoOutput)
             # Checking if calculated class and actual class match
-            if (self.layerTwoOutput[i] > 0.5 and self.expectedOutput[i] == 0) or (self.layerTwoOutput[i] < 0.5 and self.expectedOutput[i] == 1):
+            if not self.result - self.expectedOutput == 0:
                 misclassifiedData = misclassifiedData + 1
         # Display no of misclassified data
         print("Error: ", misclassifiedData/self.dataSize*100)
@@ -87,3 +90,11 @@ class Classify:
     def sigmoid(self, value):
         # Returning sigmoid value
         return 1/(1+math.exp(-value))
+
+    # Function to convert probability into class labels
+    def round(self, value):
+        # Return class label depending upon probability
+        if value > 0.5:
+            return 1
+        else:
+            return 0
