@@ -7,7 +7,6 @@
 import numpy
 import json
 import csv
-import math
 from helpers.readFile import ReadFile
 from helpers.sigmoid import sigmoid
 
@@ -101,7 +100,7 @@ class Classify:
     # Function to calculate sigmoid value
     def sigmoid(self, value):
         # Returning sigmoid value
-        return 1/(1+math.exp(-value))
+        return 1/(1+numpy.exp(-value))
 
     # Function to calculate derivative of sigmoid function
     def sigmoidDerivative(self, value):
