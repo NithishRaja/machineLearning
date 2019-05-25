@@ -69,27 +69,46 @@ class Classify:
         self.layerTwoInput = self.layerOneOutput@self.layerTwoWeight
         # Calculating layer two output
         self.layerTwoOutput = numpy.vectorize(self.sigmoid)(self.layerTwoInput)
-        # Calculating weight update for layer two
-        # self.layerTwoUpdate = numpy.multiply(self.layerOneOutput, self.layerTwoOutput - self.expectedOutput)
-        # Calling function to calculate misclassified points
-        self.calculateError()
+        # Getting class labels from probabilities
+        self.result = numpy.vectorize(self.round)(self.layerTwoOutput)
 
     # Initializing function to calculate error %
     def calculateError(self):
         misclassifiedData = 0
+        # Calculating error
+        self.error = self.result - self.expectedOutput
         # Iterating over each data
         for i in range(self.dataSize):
-            self.result = numpy.vectorize(self.round)(self.layerTwoOutput)
             # Checking if calculated class and actual class match
-            if not self.result - self.expectedOutput == 0:
+            if not self.error[i] == 0:
                 misclassifiedData = misclassifiedData + 1
-        # Display no of misclassified data
-        print("Error: ", misclassifiedData/self.dataSize*100)
+        # Return no of misclassified data
+        return misclassifiedData
+
+    # Function to update weight vector
+    def updateWeight(self):
+        # Calculating weight update for layer two
+        self.layerTwoUpdate = self.error@self.layerOneOutput
+        # Calculating backpropagated error
+        backpropagatedError = sum(self.layerTwoWeight.reshape(self.layerTwoWeight.shape[0], 1)@self.error.reshape(1, self.error.shape[0]))
+        # Calculating weight update for layer one
+        self.layerOneUpdate = numpy.transpose(self.data)@numpy.multiply(numpy.vectorize(self.sigmoidDerivative)(self.layerOneInput), backpropagatedError.reshape(backpropagatedError.shape[0], 1))
+        # Updating layer two weights
+        self.layerTwoWeight = self.layerTwoWeight - self.learningRate*self.layerTwoUpdate
+        # Updating layer one weights
+        self.layerOneWeight = self.layerOneWeight - self.learningRate*self.layerOneUpdate
 
     # Function to calculate sigmoid value
     def sigmoid(self, value):
         # Returning sigmoid value
         return 1/(1+math.exp(-value))
+
+    # Function to calculate derivative of sigmoid function
+    def sigmoidDerivative(self, value):
+        # Getting sigmoid value
+        result = self.sigmoid(value)
+        # Returning derivative value
+        return result*(1-result)
 
     # Function to convert probability into class labels
     def round(self, value):
